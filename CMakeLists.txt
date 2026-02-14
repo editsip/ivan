@@ -24,7 +24,7 @@ juce_add_plugin(Ivan
     COPY_PLUGIN_AFTER_BUILD TRUE
     PLUGIN_MANUFACTURER_CODE Edsp
     PLUGIN_CODE             Ivan
-    FORMATS                 VST3 Standalone
+    FORMATS                 AU VST3 Standalone
     PRODUCT_NAME            "Ivan"
     BUNDLE_ID               "com.editsip.ivan"
     MICROPHONE_PERMISSION_ENABLED TRUE
