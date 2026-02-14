@@ -294,6 +294,10 @@ void IvanAudioProcessor::setStateInformation(const void* data, int sizeInBytes) 
         apvts.replaceState(juce::ValueTree::fromXml(*xmlState));
 }
 
+juce::AudioProcessorEditor* IvanAudioProcessor::createEditor() {
+    return new IvanAudioProcessorEditor(*this);
+}
+
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
     return new IvanAudioProcessor();
 }
