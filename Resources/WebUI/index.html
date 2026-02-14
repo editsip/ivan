@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ivan</title>
+    <!-- INLINE_CSS -->
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="logo">ivan</h1>
+                <span class="subtitle">valve amplifier</span>
+            </div>
+            <div class="header-center">
+                <!-- Channel selector -->
+                <div class="channel-tabs">
+                    <button class="channel-tab active" data-channel="0">clean
+                        <span class="channel-indicator" style="background:#4a9e6e"></span>
+                    </button>
+                    <button class="channel-tab" data-channel="1">crunch
+                        <span class="channel-indicator" style="background:#c4883a"></span>
+                    </button>
+                    <button class="channel-tab" data-channel="2">lead
+                        <span class="channel-indicator" style="background:#b04a4a"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="header-right">
+                <!-- View selector -->
+                <div class="view-tabs">
+                    <button class="view-tab active" data-view="performance">performance</button>
+                    <button class="view-tab" data-view="full">full panel</button>
+                    <button class="view-tab" data-view="hood">under the hood</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main content area -->
+        <main class="main-content">
+            <!-- Visualization (left side) -->
+            <div class="viz-panel">
+                <canvas id="tubeViz" width="240" height="320"></canvas>
+                <div class="viz-label">
+                    <span class="tube-name" id="tubeLabel">12AX7</span>
+                    <span class="tube-desc">preamp stage 1</span>
+                </div>
+            </div>
+
+            <!-- Controls (right side) -->
+            <div class="controls-panel">
+
+                <!-- Performance view: essentials -->
+                <div class="view-content active" id="view-performance">
+                    <!-- Gain & Volume row -->
+                    <div class="control-row">
+                        <div class="knob-group">
+                            <div class="knob" data-param="inputGain" data-min="-20" data-max="20" data-default="0">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">input</span>
+                            <span class="knob-value-text">0 dB</span>
+                        </div>
+                        <div class="knob-group">
+                            <div class="knob" data-param="preampGain" data-min="0" data-max="1" data-default="0.5">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">gain</span>
+                            <span class="knob-value-text">50%</span>
+                        </div>
+                        <div class="knob-group">
+                            <div class="knob" data-param="master" data-min="0" data-max="1" data-default="0.5">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">master</span>
+                            <span class="knob-value-text">50%</span>
+                        </div>
+                        <div class="knob-group">
+                            <div class="knob" data-param="outputLevel" data-min="-40" data-max="10" data-default="0">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">output</span>
+                            <span class="knob-value-text">0 dB</span>
+                        </div>
+                    </div>
+
+                    <!-- Tone row -->
+                    <div class="control-row">
+                        <div class="knob-group">
+                            <div class="knob" data-param="bass" data-min="0" data-max="1" data-default="0.5">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">bass</span>
+                            <span class="knob-value-text">50%</span>
+                        </div>
+                        <div class="knob-group">
+                            <div class="knob" data-param="mid" data-min="0" data-max="1" data-default="0.5">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">mid</span>
+                            <span class="knob-value-text">50%</span>
+                        </div>
+                        <div class="knob-group">
+                            <div class="knob" data-param="treble" data-min="0" data-max="1" data-default="0.5">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">treble</span>
+                            <span class="knob-value-text">50%</span>
+                        </div>
+                        <div class="knob-group">
+                            <div class="knob" data-param="presence" data-min="0" data-max="1" data-default="0.5">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">presence</span>
+                            <span class="knob-value-text">50%</span>
+                        </div>
+                        <div class="knob-group">
+                            <div class="knob" data-param="resonance" data-min="0" data-max="1" data-default="0.5">
+                                <svg viewBox="0 0 80 80"><circle class="knob-track" cx="40" cy="40" r="34"/><circle class="knob-value" cx="40" cy="40" r="34"/><circle class="knob-dot" cx="40" cy="8" r="3"/></svg>
+                            </div>
+                            <span class="knob-label">resonance</span>
+                            <span class="knob-value-text">50%</span>
+                        </div>
+                    </div>
+
+                    <!-- Status bar -->
+                    <div class="status-bar">
+                        <div class="status-item">
+                            <span class="status-dot" id="gateIndicator"></span>
+                            <span>gate</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="meter-bar" id="grMeter"><span class="meter-fill"></span></span>
+                            <span>GR</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full panel view -->
+                <div class="view-content" id="view-full">
+                    <!-- Tone stack model selector -->
+                    <div class="selector-grid">
+                        <button class="selector-btn active" data-param="toneStackModel" data-value="0">
+                            <span class="sel-name">marshall</span>
+                            <span class="sel-desc">british bite</span>
+                        </button>
+                        <button class="selector-btn" data-param="toneStackModel" data-value="1">
+                            <span class="sel-name">fender</span>
+                            <span class="sel-desc">american warmth</span>
+                        </button>
+                        <button class="selector-btn" data-param="toneStackModel" data-value="2">
+                            <span class="sel-name">vox</span>
+                            <span class="sel-desc">chimey presence</span>
+                        </button>
+                        <button class="selector-btn" data-param="toneStackModel" data-value="3">
+                            <span class="sel-name">mesa</span>
+                            <span class="sel-desc">tight & focused</span>
+                        </button>
+                        <button class="selector-btn" data-param="toneStackModel" data-value="4">
+                            <span class="sel-name">hiwatt</span>
+                            <span class="sel-desc">clean power</span>
+                        </button>
+                    </div>
+
+                    <!-- Cabinet section -->
+                    <div class="section-header">cabinet & mic</div>
+                    <div class="selector-grid">
+                        <button class="selector-btn active" data-param="cabType" data-value="0">
+                            <span class="sel-name">open 1x12</span>
+                            <span class="sel-desc">airy & loose</span>
+                        </button>
+                        <button class="selector-btn" data-param="cabType" data-value="1">
+                            <span class="sel-name">closed 2x12</span>
+                            <span class="sel-desc">punchy focus</span>
+                        </button>
+                        <button class="selector-btn" data-param="cabType" data-value="2">
+                            <span class="sel-name">closed 4x12</span>
+                            <span class="sel-desc">wall of sound</span>
+                        </button>
+                        <button class="selector-btn" data-param="cabType" data-value="3">
+                            <span class="sel-name">open 2x12</span>
+                            <span class="sel-desc">wide & warm</span>
+                        </button>
+                    </div>
+
+                    <!-- Mic knobs -->
+                    <div class="control-row compact">
+                        <div class="knob-group small">
+                            <div class="knob" data-param="micDistance" data-min="0" data-max="100" data-default="5">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">distance</span>
+                            <span class="knob-value-text">5cm</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="micAngle" data-min="0" data-max="90" data-default="0">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">angle</span>
+                            <span class="knob-value-text">0&deg;</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="micPosition" data-min="0" data-max="1" data-default="0.3">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">cone/edge</span>
+                            <span class="knob-value-text">30%</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="roomAmount" data-min="0" data-max="1" data-default="0.1">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">room</span>
+                            <span class="knob-value-text">10%</span>
+                        </div>
+                    </div>
+
+                    <!-- Compressor & Gate -->
+                    <div class="section-header">dynamics</div>
+                    <div class="control-row compact">
+                        <div class="knob-group small">
+                            <div class="knob" data-param="compThreshold" data-min="-60" data-max="0" data-default="-20">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">comp thresh</span>
+                            <span class="knob-value-text">-20dB</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="compRatio" data-min="1" data-max="20" data-default="4">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">ratio</span>
+                            <span class="knob-value-text">4:1</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="compMix" data-min="0" data-max="1" data-default="1">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">comp mix</span>
+                            <span class="knob-value-text">100%</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="gateThreshold" data-min="-96" data-max="0" data-default="-40">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">gate thresh</span>
+                            <span class="knob-value-text">-40dB</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Under the hood view -->
+                <div class="view-content" id="view-hood">
+                    <!-- Tube swapping -->
+                    <div class="section-header">tube selection</div>
+                    <div class="tube-swap-row">
+                        <div class="tube-select">
+                            <label>preamp V1</label>
+                            <select data-param="preampTube1">
+                                <option value="0">12AX7</option>
+                                <option value="1">12AU7</option>
+                                <option value="2">12AT7</option>
+                                <option value="3">EF86</option>
+                            </select>
+                        </div>
+                        <div class="tube-select">
+                            <label>preamp V2</label>
+                            <select data-param="preampTube2">
+                                <option value="0">12AX7</option>
+                                <option value="1">12AU7</option>
+                                <option value="2">12AT7</option>
+                                <option value="3">EF86</option>
+                            </select>
+                        </div>
+                        <div class="tube-select">
+                            <label>power tubes</label>
+                            <select data-param="powerTube">
+                                <option value="0">6V6</option>
+                                <option value="1">EL84</option>
+                                <option value="2">6L6</option>
+                                <option value="3" selected>EL34</option>
+                                <option value="4">KT88</option>
+                                <option value="5">6550</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Advanced controls -->
+                    <div class="section-header">power amp internals</div>
+                    <div class="control-row compact">
+                        <div class="knob-group small">
+                            <div class="knob" data-param="bias" data-min="0" data-max="1" data-default="0.5">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">bias</span>
+                            <span class="knob-value-text">50%</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="sag" data-min="0" data-max="1" data-default="0.3">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">sag</span>
+                            <span class="knob-value-text">30%</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="variac" data-min="0.3" data-max="1" data-default="1">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">variac</span>
+                            <span class="knob-value-text">100%</span>
+                        </div>
+                    </div>
+                    <div class="control-row compact">
+                        <div class="knob-group small">
+                            <div class="knob" data-param="mismatch" data-min="0" data-max="1" data-default="0">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">mismatch</span>
+                            <span class="knob-value-text">0%</span>
+                        </div>
+                        <div class="knob-group small">
+                            <div class="knob" data-param="classAB" data-min="0" data-max="1" data-default="0">
+                                <svg viewBox="0 0 60 60"><circle class="knob-track" cx="30" cy="30" r="24"/><circle class="knob-value" cx="30" cy="30" r="24"/><circle class="knob-dot" cx="30" cy="8" r="2.5"/></svg>
+                            </div>
+                            <span class="knob-label">class A/AB</span>
+                            <span class="knob-value-text">AB</span>
+                        </div>
+                    </div>
+
+                    <!-- Quality -->
+                    <div class="section-header">quality</div>
+                    <div class="selector-grid">
+                        <button class="selector-btn" data-param="oversampling" data-value="0">
+                            <span class="sel-name">draft</span>
+                            <span class="sel-desc">2x oversample</span>
+                        </button>
+                        <button class="selector-btn active" data-param="oversampling" data-value="1">
+                            <span class="sel-name">normal</span>
+                            <span class="sel-desc">4x oversample</span>
+                        </button>
+                        <button class="selector-btn" data-param="oversampling" data-value="2">
+                            <span class="sel-name">HQ</span>
+                            <span class="sel-desc">8x oversample</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <span class="footer-name">ivan</span>
+            <span class="footer-desc">valve amplifier</span>
+        </footer>
+    </div>
+
+    <!-- INLINE_JS -->
+</body>
+</html>
