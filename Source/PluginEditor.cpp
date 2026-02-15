@@ -4,7 +4,6 @@ IvanAudioProcessorEditor::IvanAudioProcessorEditor(IvanAudioProcessor& p)
     : AudioProcessorEditor(&p), processorRef(p)
 {
     setLookAndFeel(&lookAndFeel);
-    setSize(kWidth, kHeight);
     setResizable(true, true);
     setResizeLimits(700, 450, 1400, 900);
 
@@ -114,6 +113,9 @@ IvanAudioProcessorEditor::IvanAudioProcessorEditor(IvanAudioProcessor& p)
     addAndMakeVisible(grLabel);
 
     startTimerHz(30);
+
+    // setSize triggers resized(), so call it AFTER all components exist
+    setSize(kWidth, kHeight);
 }
 
 IvanAudioProcessorEditor::~IvanAudioProcessorEditor() {
